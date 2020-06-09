@@ -1,0 +1,39 @@
+version: "3"
+
+networks:
+  directus:
+
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: "directus"
+      MYSQL_USER: "directus"
+      MYSQL_PASSWORD: "directus"
+      MYSQL_ROOT_PASSWORD: "directus"
+    volumes:
+      - ./mysql_demo_data:/docker-entrypoint-initdb.d
+    ports:
+      - "33061:3306"
+    networks:
+      - directus
+
+  directus:
+    image: demianh/directus_mova_app:v1
+    ports:
+      - "8881:80"
+    environment:
+      DIRECTUS_APP_ENV: "production"
+      DIRECTUS_AUTH_PUBLICKEY: "some random secret"
+      DIRECTUS_AUTH_SECRETKEY: "another random secret"
+      DIRECTUS_DATABASE_HOST: "mysql"
+      DIRECTUS_DATABASE_PORT: "3306"
+      DIRECTUS_DATABASE_NAME: "directus"
+      DIRECTUS_DATABASE_USERNAME: "directus"
+      DIRECTUS_DATABASE_PASSWORD: "directus"
+    volumes:
+      - ./data/config:/var/directus/config
+      - ./data/uploads:/var/directus/public/uploads
+      - ./directus/public/extensions/custom:/var/directus/public/extensions/custom
+    networks:
+      - directus

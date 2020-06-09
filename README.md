@@ -1,20 +1,22 @@
-# Building the custom Docker
+# Custom Directus App Backend Container
 
-Update the VERSION in build_docker.sh and run:
+The code to build the custom app backend docker image.
+
+## Building the custom Docker image
+
+Update the $VERSION in build_docker.sh and run:
 
     ./build_docker.sh
 
 
-# Run the dev environment for testing / development
+## Run the dev environment for testing / development
 
     docker-compose up -d
-    docker-compose run directus install --email admin@example.com --password admin
 
-### Credentials 
+#### Credentials 
 
-| Local Login Url: | http://localhost:8881 |
-| Username: | admin@example.com |
-| Password: | admin |
-
-For more details see: https://docs.directus.io/installation/docker.html
-
+```
+Login: http://localhost:8881
+Username: admin@example.com
+Password: admin
+```

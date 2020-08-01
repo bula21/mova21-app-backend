@@ -1,7 +1,7 @@
 version: "3"
 
 networks:
-  directus:
+  directus_db:
 
 services:
   mysql:
@@ -16,10 +16,10 @@ services:
     ports:
       - "33061:3306"
     networks:
-      - directus
+      - directus_db
 
   directus:
-    image: demianh/directus_mova_app:v1
+    image: demianh/directus_mova_app:v2
     ports:
       - "8881:80"
     environment:
@@ -36,4 +36,4 @@ services:
       - ./data/uploads:/var/directus/public/uploads
       - ./src/public/extensions/custom:/var/directus/public/extensions/custom
     networks:
-      - directus
+      - directus_db

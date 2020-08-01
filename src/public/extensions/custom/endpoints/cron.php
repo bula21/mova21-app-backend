@@ -48,7 +48,7 @@ return [
 							// update if needed
 							if (
 								$existingPost['data']['language'] !== $lang or
-								$existingPost['data']['title'] !== $entry['title']['rendered'] or
+								$existingPost['data']['title'] !== html_entity_decode($entry['title']['rendered']) or
 								$existingPost['data']['content'] !== $entry['content']['rendered'] or
 								$existingPost['data']['excerpt'] !== $entry['excerpt']['rendered'] or
 								$existingPost['data']['date'] !== date('Y-m-d H:i:s', strtotime($entry['date'])) or
@@ -59,7 +59,7 @@ return [
 									"date" => date('Y-m-d H:i:s', strtotime($entry['date'])),
 									"wp_post_id" => $entry['id'],
 									"language" => $lang,
-									"title" => $entry['title']['rendered'],
+									"title" => html_entity_decode($entry['title']['rendered']),
 									"content" => $entry['content']['rendered'],
 									"excerpt" => $entry['excerpt']['rendered'],
 									"image_wp_id" => $entry['featured_media'],
@@ -100,7 +100,7 @@ return [
 								"date" => date('Y-m-d H:i:s', strtotime($entry['date'])),
 								"wp_post_id" => $entry['id'],
 								"language" => $lang,
-								"title" => $entry['title']['rendered'],
+								"title" => html_entity_decode($entry['title']['rendered']),
 								"content" => $entry['content']['rendered'],
 								"excerpt" => $entry['excerpt']['rendered'],
 								"image_wp_id" => $entry['featured_media'],

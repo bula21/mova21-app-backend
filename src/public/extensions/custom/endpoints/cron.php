@@ -4,6 +4,7 @@ use Directus\Application\Http\Request;
 use Directus\Application\Http\Response;
 use Directus\Services\FilesServices;
 use Directus\Services\ItemsService;
+use League\HTMLToMarkdown\HtmlConverter;
 
 // http://localhost:8881/_/custom/cron/news
 
@@ -14,6 +15,12 @@ function mova21_http_get_json($url) {
 		throw new Exception('Invalid Response from Wordpress: '. $res->getStatusCode() . ' ' . $res->getBody());
 	}
 	return json_decode($res->getBody(), true);
+}
+
+function mova21_html2markdown($html) {
+	$converter = new HtmlConverter();
+	$converter->getConfig()->setOption('strip_tags', true);
+	return $converter->convert($html);
 }
 
 return [
@@ -46,10 +53,11 @@ return [
 						} catch (Exception $e) {}
 						if ($existingPost) {
 							// update if needed
+							$newContent = mova21_html2markdown($entry['content']['rendered']);
 							if (
 								$existingPost['data']['language'] !== $lang or
 								$existingPost['data']['title'] !== html_entity_decode($entry['title']['rendered']) or
-								$existingPost['data']['content'] !== $entry['content']['rendered'] or
+								$existingPost['data']['content'] !== $newContent or
 								$existingPost['data']['excerpt'] !== $entry['excerpt']['rendered'] or
 								$existingPost['data']['date'] !== date('Y-m-d H:i:s', strtotime($entry['date'])) or
 								$existingPost['data']['image_wp_id'] !== $entry['featured_media']
@@ -60,7 +68,7 @@ return [
 									"wp_post_id" => $entry['id'],
 									"language" => $lang,
 									"title" => html_entity_decode($entry['title']['rendered']),
-									"content" => $entry['content']['rendered'],
+									"content" => $newContent,
 									"excerpt" => $entry['excerpt']['rendered'],
 									"image_wp_id" => $entry['featured_media'],
 									"image" => null
@@ -101,7 +109,7 @@ return [
 								"wp_post_id" => $entry['id'],
 								"language" => $lang,
 								"title" => html_entity_decode($entry['title']['rendered']),
-								"content" => $entry['content']['rendered'],
+								"content" => mova21_html2markdown($entry['content']['rendered']),
 								"excerpt" => $entry['excerpt']['rendered'],
 								"image_wp_id" => $entry['featured_media'],
 								"image" => $file ? $file['data']['id'] : null

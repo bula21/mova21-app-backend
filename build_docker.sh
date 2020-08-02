@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export VERSION=v2
+export VERSION=v3
 
 SHELLDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SHELLDIR

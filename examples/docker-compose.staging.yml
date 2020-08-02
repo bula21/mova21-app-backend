@@ -18,7 +18,7 @@ services:
       - mysql-datavolume:/var/lib/mysql
 
   directus:
-    image: demianh/directus-app-backend:v2
+    image: demianh/directus-app-backend:v3
     restart: always
     ports:
       - "8885:80"

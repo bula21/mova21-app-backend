@@ -19,7 +19,7 @@ services:
       - directus_db
 
   directus:
-    image: demianh/directus_mova_app:v2
+    image: demianh/directus-app-backend:v3
     ports:
       - "8881:80"
     environment:

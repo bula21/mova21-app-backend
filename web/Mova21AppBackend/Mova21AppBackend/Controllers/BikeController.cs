@@ -13,24 +13,24 @@ namespace Mova21AppBackend.Controllers
     [Route("api/[controller]")]
     public class BikeController
     {
-        private readonly IStorage _storage;
+        private readonly IBikeRepository _bikeRepository;
 
-        public BikeController(IStorage storage)
+        public BikeController(IBikeRepository bikeRepository)
         {
-            _storage = storage;
+            _bikeRepository = bikeRepository;
         }
 
         [HttpGet]
         public BikeAvailabilities Get()
         {
-            return _storage.GetBikeAvailabilities();
+            return _bikeRepository.GetBikeAvailabilities();
         }
 
         [HttpPut("")]
         public BikeAvailabilities AdjustCount(ChangeBikeAvailabilityCountModel changeBikeAvailabilityCountModel)
         {
-            _storage.ChangeBikeAvailability(changeBikeAvailabilityCountModel);
-            return _storage.GetBikeAvailabilities();
+            _bikeRepository.ChangeBikeAvailability(changeBikeAvailabilityCountModel);
+            return _bikeRepository.GetBikeAvailabilities();
         }
     }
 }

@@ -4,7 +4,7 @@ using Mova21AppBackend.Data.Models;
 
 namespace Mova21AppBackend.Data.Storage
 {
-    public class InMemoryStorage : IStorage
+    public class InMemoryBikeRepository : IBikeRepository
     {
         private static readonly Dictionary<string, int> Bikes = new()
         {

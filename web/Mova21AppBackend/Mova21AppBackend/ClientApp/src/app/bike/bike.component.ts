@@ -20,11 +20,7 @@ export class BikeComponent implements OnInit {
     });
   }
 
-  changeAvailability(type: string, change: number) {
-    this.bikeService.changeCount({ type: type, amountChange: change}).subscribe(newAvailabilities => this.availabilities = newAvailabilities);
-  }
-
-  updateAvailabilty(availability: BikeAvailability){
-    //TODO
+  changeAvailability(id: string, change: number) {
+    this.bikeService.changeCount({ id: id, amountChange: change}).subscribe(newAvailabilities => this.availabilities = newAvailabilities);
   }
 }

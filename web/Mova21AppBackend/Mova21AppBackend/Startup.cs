@@ -1,16 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Mova21AppBackend.Data;
 using Mova21AppBackend.Data.Interfaces;
 using Mova21AppBackend.Data.Storage;
 
-namespace Mova21AppBackend
-{
+namespace Mova21AppBackend;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -23,13 +21,7 @@ namespace Mova21AppBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IBikeRepository, InMemoryBikeRepository>();
-            services.AddScoped<IWeatherRepository, DbWeatherRepository>();
-
-            services.AddDbContext<Mova21AppContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("SQLEXPRESS"), b => b.MigrationsAssembly("Mova21AppBackend.Data"));
-            });
+        services.AddSingleton<IBikeRepository, DirectusBikeRepository>();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
@@ -77,4 +69,3 @@ namespace Mova21AppBackend
             });
         }
     }
-}

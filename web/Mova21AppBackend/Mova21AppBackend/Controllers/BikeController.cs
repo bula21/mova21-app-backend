@@ -21,16 +21,16 @@ namespace Mova21AppBackend.Controllers
         }
 
         [HttpGet]
-        public BikeAvailabilities Get()
+        public async Task<BikeAvailabilities> Get()
         {
-            return _bikeRepository.GetBikeAvailabilities();
+            return await _bikeRepository.GetBikeAvailabilitiesAsync();
         }
 
         [HttpPut("")]
-        public BikeAvailabilities AdjustCount(ChangeBikeAvailabilityCountModel changeBikeAvailabilityCountModel)
+        public async Task<BikeAvailabilities> AdjustCount(ChangeBikeAvailabilityCountModel changeBikeAvailabilityCountModel)
         {
-            _bikeRepository.ChangeBikeAvailability(changeBikeAvailabilityCountModel);
-            return _bikeRepository.GetBikeAvailabilities();
+            await _bikeRepository.ChangeBikeAvailabilityAsync(changeBikeAvailabilityCountModel);
+            return await _bikeRepository.GetBikeAvailabilitiesAsync();
         }
     }
 }

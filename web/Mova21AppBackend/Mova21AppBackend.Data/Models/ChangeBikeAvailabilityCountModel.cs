@@ -2,7 +2,7 @@
 {
     public class ChangeBikeAvailabilityCountModel
     {
-        public string Type { get; set; }
+        public int Id { get; set; }
         public int AmountChange { get; set; }
     }
 }

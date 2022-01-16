@@ -8,6 +8,7 @@ import { AppComponent } from "./app.component";
 import { NavMenuComponent } from "./nav-menu/nav-menu.component";
 import { HomeComponent } from "./home/home.component";
 import { BikeComponent } from "./bike/bike.component";
+import { WeatherComponent } from "./weather/weather.component";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { BikeComponent } from "./bike/bike.component";
     RouterModule.forRoot([
       { path: "", component: HomeComponent, pathMatch: "full" },
       { path: "bike", component: BikeComponent },
+      { path: "weather", component: WeatherComponent },
     ])
   ],
   providers: [],

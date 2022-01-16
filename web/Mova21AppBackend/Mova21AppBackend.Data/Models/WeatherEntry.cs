@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Mova21AppBackend.Data.Models
 {
@@ -14,8 +9,6 @@ namespace Mova21AppBackend.Data.Models
         public DayTime DayTime { get; set; }
         public double Temperature { get; set; }
         public WeatherType Weather { get; set; }
-        [Timestamp]
-        public byte[] Timestamp { get; set; }
     }
 
     public enum WeatherType

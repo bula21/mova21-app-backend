@@ -9,7 +9,9 @@ namespace Mova21AppBackend.Data.Interfaces
 {
     public interface IWeatherRepository
     {
-        public IEnumerable<WeatherEntry> GetWeatherEntriesByDateRange(DateTime startDate, DateTime endDate);
-        public void UpdateWeatherEntry(WeatherEntry weatherEntry);
+        public Task<WeatherEntries> GetWeatherEntriesByDateRange(DateTime startDate, DateTime endDate);
+        public Task UpdateWeatherEntry(WeatherEntry weatherEntry);
+        Task DeleteWeatherEntry(int id);
+        Task<WeatherEntry> CreateWeatherEntry(WeatherEntry model);
     }
 }

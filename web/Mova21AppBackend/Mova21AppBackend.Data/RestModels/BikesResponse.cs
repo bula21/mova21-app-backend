@@ -10,13 +10,13 @@ namespace Mova21AppBackend.Data.RestModels;
 public class BikesResponse
 {
     [JsonPropertyName("data")]
-    public IEnumerable<BikeResponseData> Data { get; set; }
+    public IEnumerable<BikeResponseData>? Data { get; set; }
 }
 
 public class BikeResponse
 {
     [JsonPropertyName("data")]
-    public BikeResponseData Data { get; set; }
+    public BikeResponseData? Data { get; set; }
 }
 
 public class BikeResponseData

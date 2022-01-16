@@ -24,11 +24,11 @@ namespace Mova21AppBackend.Data.Storage
             var response = await Client.ExecuteGetAsync<BikesResponse>(request);
             return new BikeAvailabilities
             {
-                Availabilities = response.Data.Data.Select(x => new BikeAvailability
+                Availabilities = response.Data.Data?.Select(x => new BikeAvailability
                 {
                     AvailableCount = x.AvailableCount,
                     Id = x.Id,
-                    Type = x.Type
+                    Type = x.Type ?? ""
                 })
 
             };
@@ -44,14 +44,14 @@ namespace Mova21AppBackend.Data.Storage
             var patchRequest = new RestRequest($"{BikeUrl}/{model.Id}", Method.PATCH)
                 .AddJsonBody(new
                 {
-                    availablecount = getResponse.Data.Data.AvailableCount + model.AmountChange
+                    availablecount = (getResponse.Data.Data?.AvailableCount ?? 0) + model.AmountChange
                 });
             var patchResponse = await Client.ExecuteAsync<BikeResponse>(patchRequest);
             return new BikeAvailability
             {
-                AvailableCount = patchResponse.Data.Data.AvailableCount,
-                Id = patchResponse.Data.Data.Id,
-                Type = patchResponse.Data.Data.Type
+                AvailableCount = patchResponse.Data.Data?.AvailableCount ?? 0,
+                Id = patchResponse.Data.Data?.Id ?? 0,
+                Type = patchResponse.Data.Data?.Type ?? ""
             };
         }
     }

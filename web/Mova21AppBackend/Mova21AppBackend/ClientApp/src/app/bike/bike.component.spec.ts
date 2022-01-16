@@ -8,8 +8,9 @@ describe("BikeComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BikeComponent ]
-    })
+    declarations: [BikeComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   });
 

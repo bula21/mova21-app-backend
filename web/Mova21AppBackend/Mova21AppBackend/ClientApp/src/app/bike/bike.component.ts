@@ -1,8 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { BikeService } from "../shared/services/bike.service";
 import { BikeAvailabilities } from "../shared/models/bikeavailabilities";
-import { BikeAvailability } from "../shared/models/bikeavailability";
-import { ChangeBikeAvailabilityCountModel } from "../shared/models/changeBikeAvailabilityCountModel";
 
 @Component({
   selector: "app-bike",
@@ -20,7 +18,7 @@ export class BikeComponent implements OnInit {
     });
   }
 
-  changeAvailability(id: string, change: number) {
+  changeAvailability(id: number, change: number) {
     this.bikeService.changeCount({ id: id, amountChange: change}).subscribe(newAvailabilities => this.availabilities = newAvailabilities);
   }
 }

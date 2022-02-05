@@ -13,24 +13,22 @@ namespace Mova21AppBackend.Data.Storage
         {
             Configuration = configuration;
             Client = new RestClient(Configuration["Directus:BaseUrl"]);
-            Client.Authenticator = new JwtAuthenticator(Token);
+            Client.Authenticator = new JwtAuthenticator(GetToken().Result);
         }
 
         protected RestClient Client { get; }
 
-        public string Token
+        public async Task<string> GetToken()
         {
-            get
+
+            var request = new RestRequest("auth/authenticate", Method.Post);
+            request.AddJsonBody(new
             {
-                var request = new RestRequest("auth/authenticate", Method.POST);
-                request.AddJsonBody(new
-                {
-                    email = Configuration["Directus:Email"],
-                    password = Configuration["Directus:Password"]
-                });
-                var response = Client.Execute<TokenResponse>(request);
-                return response.Data.Data?.Token ?? throw new ArgumentException();
-            }
+                email = Configuration["Directus:Email"],
+                password = Configuration["Directus:Password"]
+            });
+            var response = await Client.ExecuteAsync<TokenResponse>(request);
+            return response.Data.Data?.Token ?? throw new ArgumentException();
         }
     }
 }

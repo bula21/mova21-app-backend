@@ -17,7 +17,7 @@ export class WeatherService extends ServiceBase {
 
   /** GET invoices from the server */
   getEntriesByDateRange(startDate: Date, endDate: Date): Observable<WeatherEntry[]> {
-    return this.http.get<WeatherEntry[]>(`${this.url}`);
+    return this.http.get<WeatherEntry[]>(`${this.url}/${startDate.toISOString()}/${endDate.toISOString()}`);
   }
 
   updateEntry(entry: WeatherEntry): Observable<void> {

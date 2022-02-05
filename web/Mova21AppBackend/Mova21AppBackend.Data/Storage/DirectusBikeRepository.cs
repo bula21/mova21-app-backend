@@ -36,12 +36,12 @@ namespace Mova21AppBackend.Data.Storage
 
         public async Task<BikeAvailability> ChangeBikeAvailabilityAsync(ChangeBikeAvailabilityCountModel model)
         {
-            var getRequest = new RestRequest($"{BikeUrl}/{model.Id}", Method.GET);
+            var getRequest = new RestRequest($"{BikeUrl}/{model.Id}", Method.Get);
             var getResponse = await Client.ExecuteAsync<BikeResponse>(getRequest);
 
 
 
-            var patchRequest = new RestRequest($"{BikeUrl}/{model.Id}", Method.PATCH)
+            var patchRequest = new RestRequest($"{BikeUrl}/{model.Id}", Method.Patch)
                 .AddJsonBody(new
                 {
                     availablecount = (getResponse.Data.Data?.AvailableCount ?? 0) + model.AmountChange

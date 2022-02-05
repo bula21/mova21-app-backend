@@ -10,17 +10,29 @@ import { HomeComponent } from "./home/home.component";
 import { BikeComponent } from "./bike/bike.component";
 import { WeatherComponent } from "./weather/weather.component";
 
+import { CalendarModule } from "primeng/calendar";
+import { SelectButtonModule } from "primeng/selectbutton";
+import { ToastModule } from "primeng/toast";
+import { MessagesModule } from "primeng/messages";
+import { MessageModule } from "primeng/message";
+
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    BikeComponent
+    BikeComponent,
+    WeatherComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
     HttpClientModule,
     FormsModule,
+    CalendarModule,
+    SelectButtonModule,
+    ToastModule,
+    MessagesModule,
+    MessageModule,
     RouterModule.forRoot([
       { path: "", component: HomeComponent, pathMatch: "full" },
       { path: "bike", component: BikeComponent },

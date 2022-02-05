@@ -1,4 +1,4 @@
 export class ChangeBikeAvailabilityCountModel {
-    id = "";
+    id = 0;
     amountChange = 0;
 }

@@ -39,8 +39,6 @@ namespace Mova21AppBackend.Data.Storage
             var getRequest = new RestRequest($"{BikeUrl}/{model.Id}", Method.Get);
             var getResponse = await Client.ExecuteAsync<BikeResponse>(getRequest);
 
-
-
             var patchRequest = new RestRequest($"{BikeUrl}/{model.Id}", Method.Patch)
                 .AddJsonBody(new
                 {

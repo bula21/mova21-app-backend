@@ -28,5 +28,6 @@ namespace Mova21AppBackend.Data.Models
         Morning,
         Midday,
         Evening,
+        Night
     }
 }

@@ -8,12 +8,9 @@
       <p-calendar [(ngModel)]="endDateRange" (ngModelChange)="refreshEntries()" dateFormat="dd.mm.yy" [selectOtherMonths]="true" [showIcon]="true"></p-calendar>
     </div>
   </div>
-</div>
-
-<div class="container">
   <div class="row" *ngFor="let weatherEntry of weatherEntries">
-    <div class="col-sm-1">{{weatherEntry.date}}</div>
-    <div class="col-sm-1">{{weatherEntry.dayTime}}</div>
+    <div class="col-sm-2">{{weatherEntry.date | date}}</div>
+    <div class="col-sm-1">{{dayTimeStringMap.get(weatherEntry.dayTime)}}</div>
     <div class="col-sm-3">
       <div class="input-group mb-3">
         <input type="text" class="form-control" [(ngModel)]="weatherEntry.temperature" (ngModelChange)="updateWeatherEntry(weatherEntry)" placeholder="27">

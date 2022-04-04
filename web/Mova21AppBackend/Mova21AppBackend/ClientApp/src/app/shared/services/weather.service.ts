@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { tap, catchError } from "rxjs/operators";
 import { ServiceBase } from "./servicebase.service";
 import { WeatherEntry } from "../models/weatherEntry";
+import { WeatherEntries } from "../models/weatherEntries";
 
 @Injectable({
   providedIn: "root"
@@ -16,8 +17,8 @@ export class WeatherService extends ServiceBase {
   }
 
   /** GET invoices from the server */
-  getEntriesByDateRange(startDate: Date, endDate: Date): Observable<WeatherEntry[]> {
-    return this.http.get<WeatherEntry[]>(`${this.url}/${startDate.toISOString()}/${endDate.toISOString()}`);
+  getEntriesByDateRange(startDate: Date, endDate: Date): Observable<WeatherEntries> {
+    return this.http.get<WeatherEntries>(`${this.url}/${startDate.toISOString()}/${endDate.toISOString()}`);
   }
 
   updateEntry(entry: WeatherEntry): Observable<void> {

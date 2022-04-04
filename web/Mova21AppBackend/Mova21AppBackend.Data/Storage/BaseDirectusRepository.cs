@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.Extensions.Configuration;
 using Mova21AppBackend.Data.RestModels;
 using RestSharp;
 using RestSharp.Authenticators;
+using RestSharp.Serializers.Json;
 
 namespace Mova21AppBackend.Data.Storage
 {
@@ -13,22 +16,13 @@ namespace Mova21AppBackend.Data.Storage
         {
             Configuration = configuration;
             Client = new RestClient(Configuration["Directus:BaseUrl"]);
-            Client.Authenticator = new JwtAuthenticator(GetToken().Result);
+            Client.Authenticator = new JwtAuthenticator(Configuration["Directus:Token"]);
+            Client.UseSystemTextJson(new JsonSerializerOptions
+            {
+                Converters = { new JsonStringEnumConverter() }
+            });
         }
 
         protected RestClient Client { get; }
-
-        public async Task<string> GetToken()
-        {
-
-            var request = new RestRequest("auth/authenticate", Method.Post);
-            request.AddJsonBody(new
-            {
-                email = Configuration["Directus:Email"],
-                password = Configuration["Directus:Password"]
-            });
-            var response = await Client.ExecuteAsync<TokenResponse>(request);
-            return response.Data.Data?.Token ?? throw new ArgumentException();
-        }
     }
 }

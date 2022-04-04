@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "progress": false,
+            "progress": false, 
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -52,6 +52,14 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           }
         },
@@ -63,8 +71,12 @@
           "configurations": {
             "production": {
               "browserTarget": "Mova21AppBackend:build:production"
+            },
+            "development": {
+              "browserTarget": "Mova21AppBackend:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

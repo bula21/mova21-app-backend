@@ -16,6 +16,9 @@ import { SelectButtonModule } from "primeng/selectbutton";
 import { ToastModule } from "primeng/toast";
 import { MessagesModule } from "primeng/messages";
 import { MessageModule } from "primeng/message";
+import { AuthConfigModule } from './auth/auth-config.module';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { AutoLoginAllRoutesGuard } from 'angular-auth-oidc-client';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,7 @@ import { MessageModule } from "primeng/message";
     HomeComponent,
     BikeComponent,
     WeatherComponent,
+    UnauthorizedComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -37,9 +41,11 @@ import { MessageModule } from "primeng/message";
     MessageModule,
     RouterModule.forRoot([
       { path: "", component: HomeComponent, pathMatch: "full" },
-      { path: "bike", component: BikeComponent },
-      { path: "weather", component: WeatherComponent },
-    ])
+      { path: "bike", component: BikeComponent, canActivate: [AutoLoginAllRoutesGuard] },
+      { path: "weather", component: WeatherComponent, canActivate: [AutoLoginAllRoutesGuard] },
+      { path: "unauthorized", component: UnauthorizedComponent }
+    ]),
+    AuthConfigModule
   ],
   providers: [],
   bootstrap: [AppComponent]

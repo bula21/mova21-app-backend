@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mova21AppBackend.Data.Interfaces;
 using Mova21AppBackend.Data.Models;
-using Mova21AppBackend.Data.Storage;
 
 namespace Mova21AppBackend.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class WeatherController

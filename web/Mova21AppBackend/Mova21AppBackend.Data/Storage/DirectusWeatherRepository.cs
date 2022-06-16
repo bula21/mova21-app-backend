@@ -19,6 +19,8 @@ public class DirectusWeatherRepository : BaseDirectusRepository, IWeatherReposit
     public async Task<WeatherEntries> GetWeatherEntriesByDateRange(DateTime startDate, DateTime endDate)
     {
         var request = new RestRequest(WeatherUrl);
+        request.Parameters.AddParameter(new QueryParameter("filter[date][_between]", $"[{startDate:yyyy-MM-dd},{endDate.AddDays(1):yyyy-MM-dd}]"));
+        request.Parameters.AddParameter(new QueryParameter("sort", "-date"));
         var response = await Client.ExecuteGetAsync<WeatherEntriesResponse>(request);
 
         var existingEntries = (response.Data?.Data?.Select(x => x.ToWeatherEntry()) ?? Enumerable.Empty<WeatherEntry>())
@@ -57,14 +59,15 @@ public class DirectusWeatherRepository : BaseDirectusRepository, IWeatherReposit
             yield return (startDate.AddDays(i).Date, DayTime.Morning);
             yield return (startDate.AddDays(i).Date, DayTime.Midday);
             yield return (startDate.AddDays(i).Date, DayTime.Evening);
+            yield return (startDate.AddDays(i).Date, DayTime.Night);
         }
     }
 
     public async Task UpdateWeatherEntry(WeatherEntry model)
     {
         var patchRequest = new RestRequest($"{WeatherUrl}/{model.Id}", Method.Patch)
-            .AddJsonBody(model);
-        await Client.ExecuteAsync<WeatherEntryResponse>(patchRequest);
+            .AddJsonBody(WeatherEntryUpdateData.FromWeatherEntry(model));
+        var response = await Client.PatchAsync<WeatherEntryResponse>(patchRequest);
     }
 
     public async Task DeleteWeatherEntry(int id)
@@ -86,7 +89,7 @@ public class DirectusWeatherRepository : BaseDirectusRepository, IWeatherReposit
         var createResponse = await Client.ExecuteAsync<WeatherEntryResponse>(createRequest);
         if (createResponse.IsSuccessful)
         {
-            return createResponse.Data.Data?.ToWeatherEntry() ?? throw new ArgumentNullException();
+            return createResponse.Data?.Data?.ToWeatherEntry() ?? throw new ArgumentNullException();
         }
         else
         {

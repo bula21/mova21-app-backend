@@ -14,10 +14,8 @@ export class NavMenuComponent  implements OnInit {
   constructor(public oidcSecurityService: OidcSecurityService) { }
 
   ngOnInit() {
-    this.oidcSecurityService.isAuthenticated$.subscribe(({ isAuthenticated }) => {
+    this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
       this.isAuthenticated = isAuthenticated;
-
-      console.warn("authenticated: ", isAuthenticated);
     });
   }
 

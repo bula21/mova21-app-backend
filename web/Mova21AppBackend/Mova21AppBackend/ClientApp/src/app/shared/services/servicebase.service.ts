@@ -1,21 +1,32 @@
 import { Injectable } from "@angular/core";
 import { HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable, of } from "rxjs";
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Injectable({
   providedIn: "root"
 })
 export class ServiceBase {
+  token = "";
+  constructor(public oidcSecurityService: OidcSecurityService) {
+    oidcSecurityService.getAccessToken().subscribe((token) => {
+      console.warn("got a token in service :D ")
+      this.token = token;
+    });
+  }
+
   protected baseUrl = "";
   protected defaultHeaders() {
-    return { 'Content-Type': "application/json", 'Authorization': `Bearer ${localStorage.getItem("token")}` }
+    return { 'Content-Type': "application/json", 'Authorization': `Bearer ${this.token}` }
   }
   protected httpOptions() {
-    return this.defaultHeaders();
+    return {
+      headers: new HttpHeaders(this.defaultHeaders())
+    }
   };
 
   protected httpOptionsForFormData() {
-    let headers = { 'Authorization': `Bearer ${localStorage.getItem("token")}` };
+    let headers = { 'Authorization': `Bearer ${this.token}` };
     return {
       headers: new HttpHeaders(headers)
     }

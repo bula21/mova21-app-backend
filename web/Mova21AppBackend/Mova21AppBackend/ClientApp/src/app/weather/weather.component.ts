@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { WeatherService } from "../shared/services/weather.service";
 import { WeatherEntry } from "../shared/models/weatherEntry";
 import { WeatherType } from "../shared/models/weatherType";
+import { MessageService } from "primeng/api";
 import { Subject } from "rxjs";
 import { debounceTime } from "rxjs/operators";
-import { MessageService } from "primeng/api";
 
 @Component({
   selector: "app-weather",
@@ -19,16 +19,16 @@ export class WeatherComponent implements OnInit {
   updateTimeouts: Map<number, Subject<WeatherEntry>>;
   dayTimeStringMap: Map<number, string>;
 
-  constructor(private weatherService: WeatherService) {
+  constructor(private weatherService: WeatherService/*, private messageService: MessageService*/) {
     this.weatherOptions = [
-      { value: WeatherType.Cloud, label: "☁ Wolkig" },
-      { value: WeatherType.CloudRain, label: "🌧 Regnerisch" },
-      { value: WeatherType.CloudSun, label: "⛅ Wolkig und Sonnig" },
-      { value: WeatherType.CloudSunRain, label: "🌦 Wolkig und Sonnig mit Regen" },
-      { value: WeatherType.Fog, label: "🌫 Nebel" },
-      { value: WeatherType.Snow, label: "🌨 Schnee" },
-      { value: WeatherType.Sun, label: "🌞 Sonnig" },
-      { value: WeatherType.Thunderstorm, label: "⛈ Gewitter" }
+      { value: WeatherType.Cloud, description: "Bewölkt", src: "/assets/weather-icons/mova_app-icons_def_weather.svg" },
+      { value: WeatherType.CloudRain, description: "Regnerisch", src: "/assets/weather-icons/mova_app-icons_def_regen.svg" },
+      { value: WeatherType.CloudSun, description: "Leicht bewölkt", src: "/assets/weather-icons/mova_app-icons-wetter_SVG_wolke-sonne.svg" },
+      { value: WeatherType.CloudSunRain, description: "Leicht bewölkt mit regen", src: "/assets/weather-icons/mova_app-icons-wetter_SVG_wolke-sonne-regen.svg" },
+      { value: WeatherType.Fog, description: "Neblig", src: "/assets/weather-icons/mova_app-icons-wetter_SVG_nebel.svg" },
+      { value: WeatherType.Snow, description: "Schnee", src: "/assets/weather-icons/mova_app-icons-wetter_SVG_schnee.svg" },
+      { value: WeatherType.Sun, description: "Sonnig", src: "/assets/weather-icons/mova_app-icons_def_sonne.svg" },
+      { value: WeatherType.Thunderstorm, description: "Gewitter", src: "/assets/weather-icons/mova_app-icons_def_blitz.svg" }
     ];
     this.dayTimeStringMap = new Map<number, string>([
       [0, "Morgen"],
@@ -55,7 +55,6 @@ export class WeatherComponent implements OnInit {
     this.weatherService.getEntriesByDateRange(this.startDateRange, this.endDateRange).subscribe(weatherEntries => {
       this.weatherEntries = weatherEntries.entries;
       this.weatherEntries.forEach(entry => {
-        console.debug(entry);
         let updateTimeout = new Subject<WeatherEntry>();
         updateTimeout.pipe(debounceTime(1000)).subscribe(entry => this.updateWeatherEntry(entry));
         this.updateTimeouts.set(entry.id, updateTimeout);

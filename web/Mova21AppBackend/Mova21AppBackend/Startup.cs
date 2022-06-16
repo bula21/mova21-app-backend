@@ -36,7 +36,8 @@ public class Startup
         }).AddJwtBearer(o =>
         {
             o.Authority = Configuration["Jwt:Authority"];
-            o.Audience = Configuration["Jwt:Audience"];
+            o.TokenValidationParameters.ValidateAudience = false;
+            o.MetadataAddress = Configuration["Jwt:MetadataAddress"];
             o.Events = new JwtBearerEvents()
             {
                 OnAuthenticationFailed = c =>
@@ -50,6 +51,10 @@ public class Startup
                         return c.Response.WriteAsync(c.Exception.ToString());
                     }
                     return c.Response.WriteAsync("An error occurred processing your authentication.");
+                },
+                OnTokenValidated = async c => 
+                {
+                    
                 }
             };
         });

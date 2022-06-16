@@ -56,3 +56,33 @@ public class WeatherEntryResponseData
         };
     }
 }
+
+public class WeatherEntryUpdateData
+{
+    [JsonPropertyName("id")]
+    public int Id { get; set; }
+
+    [JsonPropertyName("weather")]
+    public WeatherType Weather { get; set; }
+
+    [JsonPropertyName("temperature")]
+    public double Temperature { get; set; }
+
+    [JsonPropertyName("daytime")]
+    public DayTime DayTime { get; set; }
+
+    [JsonPropertyName("date")]
+    public DateTime Date { get; set; }
+
+    public static WeatherEntryUpdateData FromWeatherEntry(WeatherEntry entry)
+    {
+        return new WeatherEntryUpdateData
+        {
+            Date = entry.Date,
+            DayTime = entry.DayTime,
+            Id = entry.Id,
+            Temperature = entry.Temperature,
+            Weather = entry.Weather,
+        };
+    }
+}

@@ -16,6 +16,7 @@ import { SelectButtonModule } from "primeng/selectbutton";
 import { ToastModule } from "primeng/toast";
 import { MessagesModule } from "primeng/messages";
 import { MessageModule } from "primeng/message";
+import { TooltipModule } from "primeng/tooltip";
 import { AuthConfigModule } from './auth/auth-config.module';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AutoLoginAllRoutesGuard } from 'angular-auth-oidc-client';
@@ -39,6 +40,7 @@ import { AutoLoginAllRoutesGuard } from 'angular-auth-oidc-client';
     ToastModule,
     MessagesModule,
     MessageModule,
+    TooltipModule,
     RouterModule.forRoot([
       { path: "", component: HomeComponent, pathMatch: "full" },
       { path: "bike", component: BikeComponent, canActivate: [AutoLoginAllRoutesGuard] },
